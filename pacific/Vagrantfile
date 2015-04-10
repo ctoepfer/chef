@@ -7,6 +7,10 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.require_version '>= 1.5.0'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  # Load config JSON.
+  config_json = JSON.parse(File.read("config.json"))
+
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
@@ -82,17 +86,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "shell/initial.sh"
 
   config.vm.provision :chef_solo do |chef|
-    chef.json = {
-      mysql: {
-        server_root_password: 'rootpass',
-        server_debian_password: 'debpass',
-        server_repl_password: 'replpass'
-      }
-    }
-
-    chef.run_list = [
-      'recipe[pacific::default]'
-    ]
+    chef.run_list = config_json.delete('run_list') if config_json['run_list']
+    chef.json = config_json
   end
 
   # Run final shell script.
