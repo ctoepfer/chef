@@ -16,6 +16,7 @@ user 'pacific' do
   shell '/bin/bash'
 end
 
+include_recipe 'apt'
 include_recipe 'apache2'
 
 # disable default site

@@ -1,0 +1,13 @@
+# Managed by Chef for <%= node['hostname'] %>
+
+<VirtualHost *:80>
+    ServerName localhost
+    DocumentRoot /srv/apache/pacific
+    ServerAdmin webmaster@localhost
+    <Directory /srv/apache/pacific>
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>

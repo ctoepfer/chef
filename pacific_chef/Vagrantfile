@@ -10,6 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Load config JSON.
   config_json = JSON.parse(File.read("config.json"))
+  linode_json = JSON.parse(File.read("linode.json"))
 
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -29,9 +30,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   # If this value is a shorthand to a box in Vagrant Cloud then
   # config.vm.box_url doesn't need to be specified.
-  # config.vm.box = 'chef/ubuntu-14.04'
-  config.vm.box = "precise32"
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+  config.vm.box = 'chef/ubuntu-14.04'
+  #config.vm.box = "precise32"
+  #config.vm.box_url = "http://files.vagrantup.com/precise32.box"
 
 
   # Assign this VM to a host-only network IP, allowing you to access it
@@ -92,5 +93,25 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Run final shell script.
   config.vm.provision :shell, :path => "shell/final.sh"
+
+#  config.vm.provider :linode do |provider, override|
+#    override.ssh.private_key_path = '~/.ssh/id_rsa'
+#    override.vm.box = 'linode'
+#    override.vm.box_url = "https://github.com/displague/vagrant-linode/raw/master/box/linode.box"
+
+#    provider.token = linode_json['API_Key']
+#    provider.distribution = 'Ubuntu 14.04 LTS'
+#    provider.datacenter = 'newark'
+#    provider.plan = 'Linode 1024'
+    # provider.planid = <int>
+    # provider.paymentterm = <*1*,12,24>
+    # provider.datacenterid = <int>
+    # provider.image = <string>
+    # provider.imageid = <int>
+    # provider.private_networking = <boolean>
+    # provider.stackscript = <string>
+    # provider.stackscriptid = <int>
+    # provider.distributionid = <int>
+#  end
 
 end
